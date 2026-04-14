@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Phoenix Suns Gallery</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    </head>
+    <body class="gallery-page">
+        <main class="gallery-shell">
+            <a class="page-link" href="../index.html">Back to Fan Page</a>
+            <h1>Phoenix Suns Gallery</h1>
+            <p>Swipe through some Suns-themed images and logos.</p>
+
+            <section class="carousel" aria-label="Phoenix Suns image carousel">
+                <div class="slides" id="slides">
+                    <figure class="slide">
+                        <img src="https://cdn.nba.com/teams/legacy/www.nba.com/suns/sites/suns/files/legacy/photos/sunslogo_12.jpg" alt="Phoenix Suns logo on orange background">
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2DN2NO1Qt7B8px2x1uU0P81vh7tTm0qLhFw&s" alt="Phoenix Suns logo image">
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,q_75,w_1200/v1/crm/chandler/Phoenix-Suns-Logo_A84287DC-5056-A36A-0B2C90380AD9B0DC-a842865c5056a36_a8428fc1-5056-a36a-0be758710200bec8.jpg" alt="Phoenix Suns logo sign">
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://static.nike.com/a/images/t_web_pdp_936_v2/f_auto,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/58196a3c-9bfe-4ba0-8d8b-7d7541452c38/PHX+MNK+DF+SWGMN+JSY+CE+25.png" alt="Phoenix Suns Nike jersey">
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://e0.365dm.com/21/07/2048x1152/skysports-nba-chris-paul-phoenix-suns_5433286.jpg?20210701091017" alt="Chris Paul playing for the Phoenix Suns">
+                    </figure>
+                </div>
+
+                <button class="control prev" id="prev" aria-label="Previous slide">&#10094;</button>
+                <button class="control next" id="next" aria-label="Next slide">&#10095;</button>
+            </section>
+
+            <div class="dots" id="dots" aria-label="Slide selectors"></div>
+        </main>
+
+        <script>
+            const slides = document.getElementById("slides");
+            const slideItems = Array.from(document.querySelectorAll(".slide"));
+            const dotsContainer = document.getElementById("dots");
+            const prevButton = document.getElementById("prev");
+            const nextButton = document.getElementById("next");
+            let currentIndex = 0;
+
+            slideItems.forEach((_, index) => {
+                const dot = document.createElement("button");
+                dot.className = "dot";
+                dot.type = "button";
+                dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+                dot.addEventListener("click", () => {
+                    currentIndex = index;
+                    renderCarousel();
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = Array.from(document.querySelectorAll(".dot"));
+
+            function renderCarousel() {
+                slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle("active", index === currentIndex);
+                });
+            }
+
+            function moveCarousel(direction) {
+                currentIndex = (currentIndex + direction + slideItems.length) % slideItems.length;
+                renderCarousel();
+            }
+
+            prevButton.addEventListener("click", () => moveCarousel(-1));
+            nextButton.addEventListener("click", () => moveCarousel(1));
+
+            renderCarousel();
+        </script>
+    </body>
+</html>
